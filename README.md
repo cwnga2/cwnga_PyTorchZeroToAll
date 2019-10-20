@@ -94,9 +94,7 @@ gradient = d_loss/d_w
          = 2w(x^2) - 2xy
          = 2x(x*w - y) 
 
-w = w - a * 2x(x*w - y)
-
-
+w = w - a * 2x(x * w - y)
 
 # Training loop
 for epoch in range(10):
@@ -114,6 +112,11 @@ for epoch in range(10):
 當斜率< 0， 就w 變大
 
 # ch4 PyTorch Lecture 04: Back-propagation and Autograd
+
+Back propagation 目的是for 計算w 對loss function  斜率
+
+
+# ch5 
 
 
 
