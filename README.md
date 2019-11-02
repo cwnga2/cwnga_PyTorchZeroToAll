@@ -116,8 +116,80 @@ for epoch in range(10):
 Back propagation 目的是for 計算w 對loss function  斜率
 
 
-# ch5 
+# ch5 linear model with PyTorch
 
+1. create model, model inherit torch.nn.Module
+```
+class Model(torch.nn.Module):
+    def __init__(self):
+        super(Model, self).__init__()
+        self.linear = torch.nn.Linear(1, 1)  # One in and one out
+    def forward(self, x):
+        y_pred = self.linear(x) # NOTE: before use x * w
+        return y_pred
+```
+
+2. create loss functon and optimizer(for update w)
+```
+criterion = torch.nn.MSELoss(size_average=False) # loss = (pred_y - y) * (pred_y - y
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01) #  w = w - grad * 0.01
+
+```
+
+3. forward, backward, step(update w)
+```
+    loss = criterion(y_pred, y_data)
+    loss.backward()
+    optimizer.step()
+```
+
+
+# ch6 PyTorch Lecture 06: Logistic Regression
+
+before: predict score
+
+now: predict pass/failure
+
+
+```
+linear -> sigmoid -> 0~1 
+( >= 0.5: predict y = 1, else: predict y = 0 )
+
+loss function change: 
+linear 
+   loss function(MES) = (hy-y)^2 / #sample
+logistic 
+   lost function (cross entropy loss) =  ylog(hy) + (1-y)log(1-hy)
+```
+
+code change 
+```
+#import functional for Sigmoid
+import torch.nn.functional as F
+
+# y change to be 0 or 1
+#linear
+#x_data = Variable(torch.Tensor([[1.0], [2.0], [3.0]]))
+#y_data = Variable(torch.Tensor([[2.0], [4.0], [6.0]]))
+
+#logistic
+x_data = Variable(torch.Tensor([[1.0], [2.0], [3.0]]))
+y_data = Variable(torch.Tensor([[0.0], [0.0], [1.0]]))
+
+
+#forword
+#liner y_pred = self.linear(x)
+y_pred = F.sigmoid(self.linear(x))
+
+# criterion MES -> BCELoss
+#linear criterion = torch.nn.MSELoss(size_average=False)
+#logistic
+criterion = torch.nn.BCELoss(size_average=True)
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
+
+
+```
 
 
 
