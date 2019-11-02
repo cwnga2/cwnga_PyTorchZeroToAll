@@ -191,6 +191,39 @@ optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
 ```
 
+# ch7 wide and deep
+
+wide: more parameters x
+deep: more layer
+
+- import from csv
+```
+
+import numpy as np
+xy = np.loadtxt('../data/diabetes.csv.gz', delimiter=',', dtype=np.float32)
+x_data = Variable(torch.from_numpy(xy[:, 0:-1]))
+y_data = Variable(torch.from_numpy(xy[:, [-1]]))
+
+```
+
+- more layer
+```
+
+class Model(torch.nn.Module):
+    def __init__(self):
+        super(Model, self).__init__()
+        self.linear1 = torch.nn.Linear(8, 6)
+        self.linear2 = torch.nn.Linear(6, 4)
+        self.linear3 = torch.nn.Linear(4, 1)
+        self.sigmoid = torch.nn.Sigmoid()
+    def forward(self, x):
+        out1 = self.sigmoid(self.linear1(x))
+        out2 = self.sigmoid(self.linear2(out1))
+        out3 = self.sigmoid(self.linear3(out2))
+        return out3 #predict
+
+```
+
 
 
 
