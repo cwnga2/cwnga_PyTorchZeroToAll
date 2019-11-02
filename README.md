@@ -224,6 +224,35 @@ class Model(torch.nn.Module):
 
 ```
 
+# ch8 data loader
+- import Dataset, DataLoader
+```
+from torch.utils.data import Dataset, DataLoader
+```
+- customer data set
 
+-- over write __getitem__, __len__
+```
+class CustomerDataset(Dataset):
+    def __init__(self):
+    def __getitem__(self, index):
+        return # x data , y data
 
+    def __len__(self):
+        return (number)
+
+dataset = CustomerDataset()
+train_loader = DataLoader(
+        dataset=dataset,
+        batch_size = 32,
+        shuffle=True
+        )
+```
+
+-- enumerate
+```
+for i, data in enumerate(train_loader, 0):
+    x_data, y_data = data
+    x_data, y_data = Variable(x_data), Variable(y_data)
+```
 
